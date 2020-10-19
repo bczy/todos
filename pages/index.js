@@ -2,7 +2,7 @@ import Head from 'next/head'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav'
 import { useState } from 'react';
-import Todo from '../components/TodoForm';
+import Todo from '../components/TodoCreate';
 import Todos from '../components/Todos';
 
 export default function Home() {

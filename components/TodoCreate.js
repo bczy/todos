@@ -7,7 +7,7 @@ const Todo = () => {
 
     const handleAddTodo = (e) =>{
         e.preventDefault();
-        fetch('http://localhost:3000/api/todo', {
+        fetch('http://localhost:3000/api/todos', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',

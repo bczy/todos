@@ -1,18 +1,31 @@
 import {useEffect, useState} from 'react'
+import { Container, Table } from 'react-bootstrap';
+import Todo from './Todo';
 
 const Todos = () => {
-    const [ todos, setTodos ] = useState([])
+  const [ todos, setTodos ] = useState([])
     useEffect( () => {
       fetch('http://localhost:3000/api/todos', {
         method: 'get',
       }).then((res) => res.json())
-      .then(data => {console.log(data);setTodos(data)})
+      .then(data => setTodos(data))
     },[]);
   
     return (
-        <div className="flex text-center">
-          {todos.map((todo)=> <div><span>{todo.title}</span><span>{todo.description}</span></div>)}
-        </div>
+      <Container>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <td>Title</td>
+              <td>Description</td>
+              <td>Actions</td>
+            </tr>
+          </thead>
+          <tbody>
+            {todos.map((todo,i) => <Todo key={i} {...todo}/>)}
+          </tbody>
+        </Table>
+      </Container>
   )}
 
 export default Todos;
