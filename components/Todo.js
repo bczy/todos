@@ -15,9 +15,9 @@ const Todo = ({_id, title, description, done}) => {
             body: JSON.stringify({ _id, title, description, done: !done})
         }).then((res) => console.log(res))
     }
-    return <tr>
-        <td style={done ? { textDecoration: "line-through"} : {}}>{title}</td>
-        <td style={done ? { textDecoration: "line-through"} : {}}>{description}</td>
+    return <tr style={done ? { textDecoration: "line-through"} : "none"}>
+        <td >{title}</td>
+        <td >{description}</td>
         <td>
             <Button onClick={handleCompletion}>{done ? "Reopen" : "Close"}</Button>
             <Button variant="danger" onClick={handleDelete}>Delete</Button>

@@ -2,40 +2,31 @@ import Head from 'next/head'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav'
 import { useState } from 'react';
-import Todo from '../components/TodoCreate';
+import AddTodo from '../components/AddTodo';
 import Todos from '../components/Todos';
+import { Container, Navbar } from 'react-bootstrap';
+import Navigation from '../components/Navigation';
 
 export default function Home() {
   const [currentPage, setCurrentPage ] = useState('todos')
   return (
-    <div>
+    <div> 
       <Head>
         <title>Next todos </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Nav onSelect={(selectedTab) => setCurrentPage(selectedTab)} 
-        justify 
-        variant="tabs" >
-      <Nav.Item>
-        <Nav.Link eventKey="todos">todos</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="settings">settings</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="about">about</Nav.Link>
-      </Nav.Item>
-    </Nav>
+      <Navigation />
     <main>
+      <Container className="m-4 flex fluid">
       {currentPage === "todos" ?
-        <>
-          <Todo/>
-          <Todos />
-        </>
-        : 
-        <>Hello</> 
-      }
+          <Container className="flex fluid">
+            <Todos />
+            <AddTodo />
+          </Container>
+          : 
+          <>Hello</> 
+        }
+      </Container>
     </main>
       <footer>
        
