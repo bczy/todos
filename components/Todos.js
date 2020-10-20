@@ -1,16 +1,8 @@
-import {useEffect, useState} from 'react'
 import { Card, Container, Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import Todo from './Todo';
 
-const Todos = () => {
-  const [ todos, setTodos ] = useState([])
-    useEffect( () => {
-      fetch('http://localhost:3000/api/todos', {
-        method: 'get',
-      }).then((res) => res.json())
-      .then(data => setTodos(data))
-    },[]);
-  
+const Todos = (todos) => {
     return (
       <Container>
         <Card border="light">
@@ -25,7 +17,12 @@ const Todos = () => {
                 </tr>
               </thead>
               <tbody>
-                {todos.map((todo,i) => <Todo key={i} {...todo}/>)}
+                {todos.isFetching ?
+                  <tr><td colSpan={3}>Loading</td></tr> 
+                  : todos.items.length > 0 ? 
+                    todos.items.map((todo,i) => <Todo key={i} {...todo}/>)
+                    : <tr><td colSpan={3}>Nothing to do :O</td></tr> 
+                }
               </tbody>
             </Table>
           </Card.Body>
@@ -33,4 +30,17 @@ const Todos = () => {
       </Container>
   )}
 
-export default Todos;
+  function mapStateToProps(state) {
+    const { todos } = state;
+    const { isFetching, lastUpdated, items } = todos || {
+      isFetching: true,
+      todos: []
+    }
+  
+    return {
+       isFetching, lastUpdated, items 
+    }
+  }
+  
+  
+  export default connect(mapStateToProps)(Todos)

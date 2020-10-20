@@ -1,7 +1,7 @@
 import { Navbar, Nav, Image } from "react-bootstrap";
 
 const Navigation = () => 
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Navbar.Brand href="#home">
         <Image src="/logo.svg" 
           width="45"

@@ -8,18 +8,17 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.patch(async (req, res) => {
-    const { title, description, done,_id } = req.body;
-    await req.db.collection('todos').updateOne(
-        {_id: new ObjectID(_id)},
-        {$set: {title, description, done}} );
+    const updated = await req.db.collection('todos').updateOne(
+        {_id: new ObjectID(req.query.id)},
+        {$set: {done: req.body.done}} );
         
-    res.json({muf:"doc"});
+    res.json(updated);
 });
 
 handler.delete(async (req, res) => {
     const { id } = req.query
-    await req.db.collection('todos').deleteOne({ _id: ObjectID(id) })
-    res.end()
+    const deleted = await req.db.collection('todos').deleteOne({ _id: ObjectID(id) })
+    res.json(deleted);
 });
 
 

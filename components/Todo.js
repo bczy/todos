@@ -1,27 +1,39 @@
 import { Button } from "react-bootstrap";
-const Todo = ({_id, title, description, done}) => {
-    const handleDelete = () => {
-        fetch(`http://localhost:3000/api/todo/${_id}`, {
-            method: 'DELETE',
-        }).then((res) => console.log(res))
+import { connect, useDispatch } from "react-redux";
+import { fetchDeleteTodo, fetchTodoCompletion } from '../store/actions';
+
+const Todo = ({_id, title, description, done, items}) => {
+    const dispatch = useDispatch();
+    async function handleDelete(){
+        dispatch(fetchDeleteTodo(_id, items)) 
     }
     const handleCompletion = () => {
-        fetch(`http://localhost:3000/api/todo/${_id}`, {
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ _id, title, description, done: !done})
-        }).then((res) => console.log(res))
+        dispatch(fetchTodoCompletion(_id, !done, items)) 
     }
-    return <tr style={done ? { textDecoration: "line-through"} : "none"}>
-        <td >{title}</td>
-        <td >{description}</td>
-        <td>
-            <Button onClick={handleCompletion}>{done ? "Reopen" : "Close"}</Button>
-            <Button variant="danger" onClick={handleDelete}>Delete</Button>
-        </td>
-    </tr>}
+    return (
+        <tr style={ { textDecoration: done ? "line-through" : "none"}}>
+            <td >{title}</td>
+            <td >{description}</td>
+            <td>
+                <Button onClick={handleCompletion}>{done ? "Reopen" : "Close"}</Button>
+                <Button variant="danger" onClick={handleDelete}>Delete</Button>
+            </td>
+        </tr>)
+}
 
-export default Todo;
+
+
+function mapStateToProps(state) {
+    const { todos } = state;
+    const { isFetching, lastUpdated, items } = todos || {
+      isFetching: true,
+      todos: []
+    }
+  
+    return {
+       isFetching, lastUpdated, items 
+    }
+  }
+  
+  
+  export default connect(mapStateToProps)(Todo)
