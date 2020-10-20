@@ -55,7 +55,7 @@ export function todoCompletion(_id, completion, todos) {
 
 export function fetchAddTodo(todo, todos){
   return function (dispatch){
-    return fetch('http://localhost:3000/api/todos', {
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todos`, {
       method: 'post',
       headers: {
           'Accept': 'application/json',
@@ -70,7 +70,7 @@ export function fetchAddTodo(todo, todos){
 
 export function fetchTodoCompletion(_id, completion, todos){
   return function (dispatch) {
-    return fetch(`http://localhost:3000/api/todo/${_id}`, {
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todo/${_id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -83,7 +83,7 @@ export function fetchTodoCompletion(_id, completion, todos){
 
 export function fetchDeleteTodo(_id, todos) {
   return function (dispatch) {
-    return fetch(`http://localhost:3000/api/todo/${_id}`, { method: 'DELETE'})
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todo/${_id}`, { method: 'DELETE'})
       .then(_ =>
         dispatch(deleteTodo(_id, todos))
       )
@@ -93,7 +93,7 @@ export function fetchDeleteTodo(_id, todos) {
 export function fetchTodos(user) {
   return function (dispatch) {
     dispatch(requestTodos(user))
-    return fetch(`http://localhost:3000/api/todos/`)
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todos/`)
       .then(
         response => response.json()
         // Do not use catch, because errors occured during rendering

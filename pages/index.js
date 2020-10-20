@@ -24,6 +24,7 @@ export default function Home() {
   
   useEffect(() => {
     store.dispatch(fetchTodos('trambz'));
+
   }, []);
 
   return (
