@@ -1,3 +1,4 @@
+import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import { MongoClient } from 'mongodb';
 import nextConnect from 'next-connect';
 
@@ -17,8 +18,11 @@ async function database(req, res, next) {
 
 function onError(err, req, res) {
   const statusCode = err.message;
-  console.log('onError', statusCode)
-  res.status(statusCode).end();
+  if (statusCode.length > 3){
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  } else {
+    res.status(statusCode).end();
+  }
 }
 
 const handler = nextConnect({onError});

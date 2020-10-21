@@ -14,6 +14,9 @@ function getId(req){
 function sendNotFound(res){
     res.status(StatusCodes.NOT_FOUND).end(ReasonPhrases.NOT_FOUND);
 }
+function sendInternalError(res){
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end(ReasonPhrases.INTERNAL_SERVER_ERROR);
+}
 
 handler.patch(async (req, res) => {
     const id = getId(req);
@@ -29,7 +32,7 @@ handler.patch(async (req, res) => {
                     res.json(updated)
                 }
             })
-            .catch(() => res.sendStatusCode(StatusCodes.NOT_FOUND));
+            .catch(() => sendInternalError());
     }
 });
 
@@ -45,7 +48,7 @@ handler.delete(async (req, res) => {
                     res.json(deleted)}
                 }
             )
-            .catch(e => {throw e});
+            .catch(() => sendInternalError());
     }
 });
 

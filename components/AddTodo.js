@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Col, Container, Form } from 'react-bootstrap'
 import { connect, useDispatch } from 'react-redux';
-import { fetchAddTodo } from '../store/actions';
+import { fetchAddTodo } from '../store/actions/todos';
 
 const AddTodo = ({items}) => {
     const dispatch = useDispatch();

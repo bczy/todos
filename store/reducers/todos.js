@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux'
 
 import {
   REQUEST_TODOS,
@@ -6,7 +5,7 @@ import {
   DELETE_TODO,
   COMPLETE_TODO,
   ADD_TODO
-} from './actions'
+} from '../actions/todos'
 
 function todos(
   state = {
@@ -16,6 +15,7 @@ function todos(
   },
   action
 ) {
+  console.log(action)
   switch (action.type) {
     case REQUEST_TODOS:
       return  {...state, 
@@ -49,8 +49,4 @@ function todos(
   }
 }
 
-const rootReducer = combineReducers({
-    todos
-})
-
-export default rootReducer
+export default todos

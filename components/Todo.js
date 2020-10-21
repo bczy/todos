@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { connect, useDispatch } from "react-redux";
-import { fetchDeleteTodo, fetchTodoCompletion } from '../store/actions';
+import { fetchDeleteTodo, fetchTodoCompletion } from '../store/actions/todos';
 
 const Todo = ({_id, title, description, done, items}) => {
     const dispatch = useDispatch();

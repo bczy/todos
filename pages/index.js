@@ -1,18 +1,20 @@
-import Head from 'next/head'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from 'react';
+import Head from 'next/head'
 
+import { Container } from 'react-bootstrap';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { fetchTodos } from '../store/actions/todos';
+import rootReducer from '../store/reducers';
+
+import Navigation from '../components/Navigation';
 import AddTodo from '../components/AddTodo';
 import Todos from '../components/Todos';
-import { Container } from 'react-bootstrap';
-import Navigation from '../components/Navigation';
-import thunkMiddleware from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
- 
-import rootReducer from '../store/reducers';
-import { Provider } from 'react-redux';
-import { fetchTodos } from '../store/actions';
-import { useEffect } from 'react';
+import ServerErrorModal from '../components/ServerErrorModal';
 
 export default function Home() {
   const store = createStore(
@@ -23,7 +25,7 @@ export default function Home() {
   )
   
   useEffect(() => {
-    store.dispatch(fetchTodos('trambz'));
+    store.dispatch(fetchTodos());
 
   }, []);
 
@@ -40,11 +42,9 @@ export default function Home() {
           <Todos />
           <AddTodo />
         </Container>
+        <ServerErrorModal />
       </Provider>
     </main>
-      <footer>
-       
-      </footer>
     </div>
   )
 }
