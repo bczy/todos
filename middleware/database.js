@@ -15,8 +15,14 @@ async function database(req, res, next) {
   return next();
 }
 
-const middleware = nextConnect();
+function onError(err, req, res) {
+  const statusCode = err.message;
+  console.log('onError', statusCode)
+  res.status(statusCode).end();
+}
 
-middleware.use(database);
+const handler = nextConnect({onError});
 
-export default middleware;
+handler.use(database);
+
+export default handler;

@@ -55,13 +55,13 @@ export function todoCompletion(_id, completion, todos) {
 
 export function fetchAddTodo(todo, todos){
   return function (dispatch){
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todos`, {
-      method: 'post',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(todo)
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(todo)
       })
       .then(res => res.json())
       .then(json => dispatch(addTodo({...todo, _id: json.insertedId}, todos)))
@@ -70,20 +70,20 @@ export function fetchAddTodo(todo, todos){
 
 export function fetchTodoCompletion(_id, completion, todos){
   return function (dispatch) {
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todo/${_id}`, {
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ _id, done: completion})
-        }).then(_ => dispatch(todoCompletion(_id, completion, todos)))
-      }
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/${_id}`, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ _id, done: completion})
+      }).then(_ => dispatch(todoCompletion(_id, completion, todos)))
+    }
 }
 
 export function fetchDeleteTodo(_id, todos) {
   return function (dispatch) {
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todo/${_id}`, { method: 'DELETE'})
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/${_id}`, { method: 'DELETE'})
       .then(_ =>
         dispatch(deleteTodo(_id, todos))
       )
@@ -93,7 +93,7 @@ export function fetchDeleteTodo(_id, todos) {
 export function fetchTodos(user) {
   return function (dispatch) {
     dispatch(requestTodos(user))
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/todos/`)
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}`)
       .then(
         response => response.json()
         // Do not use catch, because errors occured during rendering

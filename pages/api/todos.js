@@ -1,19 +1,21 @@
-import nextConnect from 'next-connect';
-import middleware from '../../middleware/database';
+import { StatusCodes } from 'http-status-codes';
 
-const handler = nextConnect();
-
-handler.use(middleware);
+import handler from '../../middleware/database';
 
 handler.get(async (req, res) => {
-    let doc = await req.db.collection('todos').find().toArray();
-    res.json(doc);
+    req.db.collection('todos').find().toArray()
+        .then(doc => res.json(doc))
 });
 
 handler.post(async (req, res) => {
     const { title, description } = req.body;
-    let doc = await req.db.collection('todos').insertOne({title, description, done: false});
-    res.json(doc);
+    if (!title || !description){
+        throw new Error(StatusCodes.BAD_REQUEST)
+    }
+    
+    req.db.collection('todos').insertOne({title, description, done: false})
+        .then(doc => res.json(doc))
+        .catch(e => {throw e})
 });
 
 export default handler;
