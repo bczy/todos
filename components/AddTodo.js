@@ -3,15 +3,14 @@ import { Button, Card, Col, Container, Form } from 'react-bootstrap'
 import { connect, useDispatch } from 'react-redux';
 import { fetchAddTodo } from '../store/actions/todos';
 
-const AddTodo = ({items}) => {
+const AddTodo = ({items, isSubmiting}) => {
     const dispatch = useDispatch();
     const [ title, setTitle ] = useState('');
     const [ description, setDescription ] = useState('');
-
+    
     function handleAddTodo(e){
         e.preventDefault();
-        const newTodo = {title, description};
-        dispatch(fetchAddTodo(newTodo, items)) 
+        dispatch(fetchAddTodo({title, description}, items));
     }
 
     return <Container>
@@ -36,7 +35,7 @@ const AddTodo = ({items}) => {
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridPassword">
-                        <Button variant="primary" type="submit" onClick={handleAddTodo}>
+                        <Button enabled={isSubmiting} variant="primary" type="submit" onClick={handleAddTodo}>
                             Submit
                         </Button>
                     </Form.Group>
@@ -47,19 +46,18 @@ const AddTodo = ({items}) => {
     </Container>
 }
 
-
 function mapStateToProps(state) {
-    const { todos } = state;
+    const { todos, isSubmiting } = state;
     const { items } = todos || {
-      isFetching: true,
-      todos: []
+        isSubmiting: false,
+        items: []
     }
-  
+
     return {
-       items 
+        items,
+        isSubmiting
     }
-  }
-  
-  
-  export default connect(mapStateToProps)(AddTodo)
+}
+
+export default connect(mapStateToProps)(AddTodo)
   

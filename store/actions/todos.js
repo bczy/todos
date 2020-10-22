@@ -32,18 +32,25 @@ export function fetchTodos() {
   }
 }
 
-export const ADD_TODO = 'ADD_TODO'
-function addTodo(todo, todos) {
+export const REQUEST_ADD_TODO = 'REQUEST_ADD_TODO'
+function requestAddTodos(todo, todos) {
   return {
-    type: ADD_TODO,
+    type: REQUEST_ADD_TODO,
+  }
+}
+
+export const RECEIVE_TODO = 'RECEIVE_TODO'
+function receiveTodo(todo, todos) {
+  return {
+    type: RECEIVE_TODO,
     todo,
     todos,
   }
 }
 
-
 export function fetchAddTodo(todo, todos){
   return function (dispatch){
+    dispatch(requestAddTodos())
     return fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
         method: 'post',
         headers: {
@@ -55,9 +62,8 @@ export function fetchAddTodo(todo, todos){
       .then(async response => {
         if (response.status === StatusCodes.OK){
           const resJson = await response.json()
-          dispatch(addTodo({...todo, _id: resJson.insertedId}, todos))
+          dispatch(receiveTodo({...todo, _id: resJson.insertedId}, todos))
         } else {
-          console.log("muf...",dispatch)
           dispatch(setServerError(true))
         }
       })

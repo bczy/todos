@@ -4,37 +4,33 @@ import {
   RECEIVE_TODOS,
   DELETE_TODO,
   COMPLETE_TODO,
-  ADD_TODO
+  REQUEST_ADD_TODO,
+  RECEIVE_TODO
 } from '../actions/todos'
 
 function todos(
   state = {
     isFetching: false,
     didInvalidate: false,
-    items: []
+    isSubmitting: false,
+    items: [],
   },
   action
 ) {
-  console.log(action)
   switch (action.type) {
     case REQUEST_TODOS:
       return  {...state, 
         isFetching: true,
-        didInvalidate: false
       }
       case RECEIVE_TODOS:
         return {...state,
           isFetching: false,
-          didInvalidate: false,
           items: action.todos,
-          lastUpdated: action.receivedAt
         }
       case DELETE_TODO:
         return {...state,
           isFetching: false,
-          didInvalidate: false,
           items: action.todos.filter(todo => todo._id !== action._id),
-          lastUpdated: action.receivedAt
         }
       case COMPLETE_TODO:
         const { _id, completion, todos} = action
@@ -42,8 +38,10 @@ function todos(
           todos.map(item => item._id === _id ? 
             {...item,done: completion} : item)
         }
-      case ADD_TODO:
-        return { ...state, items: [...action.todos,action.todo]}
+        case REQUEST_ADD_TODO:
+          return { ...state, isSubmitting: true}
+          case RECEIVE_TODO:
+            return { ...state, isSubmitting: false, items: [...action.todos,action.todo]}
     default:
       return state
   }

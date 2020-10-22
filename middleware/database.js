@@ -5,15 +5,22 @@ import nextConnect from 'next-connect';
 const client = new MongoClient(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  socketTimeoutMS: 2000 
 });
 
 async function database(req, res, next) {
+  console.log('connecting...')
   if (!client.isConnected()){ 
-    await client.connect();
-    }
-  req.dbClient = client;
-  req.db = client.db('todos-db');
-  return next();
+    client.connect()
+      .then(()=>{
+        console.log(`connected: client.${isConnected()}`)
+        req.dbClient = client;
+        return next();
+      }).catch(e => {
+        console.log(`failed to connect: ${e}`);
+        res.send(StatusCodes.INTERNAL_SERVER_ERROR)
+      });
+  }
 }
 
 function onError(err, req, res) {

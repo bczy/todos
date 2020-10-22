@@ -12,7 +12,7 @@ const ServerErrorModal = ({serverError}) => {
         <Modal.Header closeButton>
           <Modal.Title>Server error</Modal.Title>
         </Modal.Header>
-        <Modal.Body>It seems that server is unreachable or has an issue.</Modal.Body>
+        <Modal.Body>It seems that server is unreachable or encountered an issue.</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Refresh
