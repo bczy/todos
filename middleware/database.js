@@ -1,25 +1,29 @@
-import { getReasonPhrase, StatusCodes } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import { MongoClient } from 'mongodb';
 import nextConnect from 'next-connect';
 
 const client = new MongoClient(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  socketTimeoutMS: 2000 
 });
 
 async function database(req, res, next) {
-  console.log('connecting...')
+  console.log(`attempting db access, connected: ${client.isConnected()}`)
   if (!client.isConnected()){ 
+    console.log('connecting...')
     client.connect()
       .then(()=>{
-        console.log(`connected: client.${isConnected()}`)
+        console.log(`connected: ${client.isConnected()}`)
         req.dbClient = client;
+        req.db = client.db('todos-db');
         return next();
       }).catch(e => {
         console.log(`failed to connect: ${e}`);
         res.send(StatusCodes.INTERNAL_SERVER_ERROR)
       });
+  } else {
+    req.db = client.db('todos-db');
+    return next();
   }
 }
 
