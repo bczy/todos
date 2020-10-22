@@ -33,7 +33,7 @@ export function fetchTodos() {
 }
 
 export const REQUEST_ADD_TODO = 'REQUEST_ADD_TODO'
-function requestAddTodos(todo, todos) {
+function requestAddTodos() {
   return {
     type: REQUEST_ADD_TODO,
   }
