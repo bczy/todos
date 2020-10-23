@@ -13,7 +13,6 @@ function receiveTodos(todos) {
   return {
     type: RECEIVE_TODOS,
     todos,
-    receivedAt: Date.now()
   }
 }
 
