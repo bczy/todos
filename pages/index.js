@@ -1,8 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
+
 import Head from 'next/head'
 
 import { Container } from 'react-bootstrap';
+
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk'
@@ -20,13 +22,12 @@ export default function Home() {
   const store = createStore(
     rootReducer,  
     composeWithDevTools(
-      applyMiddleware(thunkMiddleware), // lets us dispatch() functions
+      applyMiddleware(thunkMiddleware) // lets us dispatch() functions
     ),
   )
   
   useEffect(() => {
     store.dispatch(fetchTodos());
-
   }, []);
 
   return (

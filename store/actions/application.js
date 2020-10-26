@@ -11,7 +11,6 @@ function updateServerStatus(serverError){
 
 export function setServerError(serverError) {
   return function (dispatch){
-    console.log("dispatch",serverError,dispatch)
     if (!serverError){
       dispatch(fetchTodos())
     }
