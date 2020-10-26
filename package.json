@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "formik": "^2.2.1",
     "http-status-codes": "^2.1.4",
     "log4js": "^6.3.0",
     "mongodb": "^3.6.2",
@@ -20,6 +21,7 @@
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.29.3"
   }
 }
