@@ -3,7 +3,6 @@ module.exports = {
   exportPathMap: async function () {
     const paths = {
       '/': { page: '/' },
-      '/api': { page: '/api' },
     };
 
     return paths;
